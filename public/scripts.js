@@ -1,29 +1,57 @@
 const addToCart = (e) => {
   let data = e.target.dataset;
+  displayOnShoppingCart(data);
+  console.log('data to cart', data.title);
   let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
 
   cart.push(data);
   localStorage.setItem('shoppingCart', JSON.stringify(cart));
-
-  $('.shopping-cart-items').remove();
-  getShoppingCart();
 };
 
 const displayCards = (array) => {
   return array.forEach(item => {
     $('.inventory').append(
-    `<div class='inventory-card'>
-      <img class='inventory-img' src=${item.item_img} />
-      <div class='inventory-info'>
-        <h4 class='item-title' >${item.item_title}</h4>
-        <p class='item-desc'>${item.item_desc}</p>
-        <p class='item-price'>$ ${item.item_price}</p>
-      </div>
-      <div class='add-to-cart' data-id=${item.id} data-title='${item.item_title}' data-price='${item.item_price}'>
-        add to cart
-      <div>
-    </div>`)
+      `<div class='inventory-card'>
+        <img class='inventory-img' src=${item.item_img} />
+        <div class='inventory-info'>
+          <h4 class='item-title' >${item.item_title}</h4>
+          <p class='item-desc'>${item.item_desc}</p>
+          <p class='item-price'>$ ${item.item_price}</p>
+        </div>
+        <div class='add-to-cart' data-id=${item.id} data-title='${item.item_title}' data-price='${item.item_price}'>
+          add to cart
+        <div>
+      </div>`
+    )
   })
+};
+
+const displayOrders = (array) => {
+  if(array.length > 0){
+    return array.forEach(order => {
+      $('.order-history-page').append(
+        `<div class="order-item">
+          <h5>Item Title:</h5>
+          <p>${order.item_title}</p>
+          <h5>Item Price:</h5>
+          <p>$ ${order.item_price}</p>
+          <h5>Date Ordered:</h5>
+          <p>${order.created_at}</p>
+        </div>`)
+    })
+  }
+};
+
+const displayOnShoppingCart = (obj) => {
+  $('.inventory').append(
+    `<div class='cart-item'>
+      <h5>Item Title:</h5>
+      <p class='cart-item-title'>${obj.title}</p>
+      <h5>Item Price:</h5>
+      <p class='cart-item-title'>$ ${obj.price}</p>
+      <div class='purchase' data-title='${obj.title}' data-price=${obj.price}>Purchase</div>
+    </div>`
+  )
 };
 
 const getInventory = () => {
@@ -32,18 +60,26 @@ const getInventory = () => {
   .then(array => displayCards(array))
 };
 
+const getOrderHistory = () => {
+  fetch('http://localhost:3001/api/v1/orders')
+  .then(data => data.json())
+  .then(array => displayOrders(array))
+  .catch(error => { error })
+};
+
 const getShoppingCart = () => {
   let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
   if(cart.length > 0) {
     return cart.forEach(item => {
       $('.shopping-cart-items').append(
-      `<div class='cart-item'>
-        <h5>Item Title:</h5>
-        <p class='cart-item-title'>${item.title}</p>
-        <h5>Item Price:</h5>
-        <p class='cart-item-title'>$ ${item.price}</p>
-        <div class='purchase' data-title='${item.title}' data-price=${item.price}>Purchase</div>
-      </div>`)
+        `<div class='cart-item'>
+          <h5>Item Title:</h5>
+          <p class='cart-item-title'>${item.title}</p>
+          <h5>Item Price:</h5>
+          <p class='cart-item-title'>$ ${item.price}</p>
+          <div class='purchase' data-title='${item.title}' data-price=${item.price}>Purchase</div>
+        </div>`
+      )
     })
   }
 };
@@ -54,7 +90,6 @@ const purchaseItem = (e) => {
     item_title: data.title,
     item_price: data.price
   }
-  console.log('hi danman', data);
   fetch('http://localhost:3001/api/v1/orders/', {
     method: 'POST',
     headers: {
@@ -63,7 +98,8 @@ const purchaseItem = (e) => {
     body: JSON.stringify(order)
   })
   .then(data => data.json())
-  .then(thing => console.log('thing', thing))
+  .then(thing => alert('You just made a purchase. Your credit card will now be charged. Thank you!'))
+  .catch(error => { error })
 };
 
 const showCart = (e) => {
@@ -81,6 +117,7 @@ const showHistory = (e) => {
 
 $(document).ready(getInventory);
 $(document).ready(getShoppingCart);
+$(document).ready(getOrderHistory);
 $('.shopping-cart-page').on('click', '.purchase', purchaseItem)
 $('.inventory').on('click', '.add-to-cart', addToCart);
 $('.shopping-cart').on('click', '.shopping-cart-button', showCart);
