@@ -12,8 +12,9 @@ header {
 h1 {
   background-color: yellow;
   font-family: 'Fira Sans Condensed', sans-serif;
-  text-align: center;
+  font-size: 3em;
   margin: 0;
+  text-align: center;
   width: 100%;
 }
 
@@ -32,7 +33,29 @@ main {
 }
 
 p {
+  height: 90px;
   margin: 5px;
+  overflow-y: scroll;
+}
+
+.add-to-cart {
+  background-color: yellow;
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.add-to-cart:hover {
+  cursor: pointer;
+}
+
+.cart-item {
+  height: 150px;
+  margin-top: 10px;
+}
+
+.cart-item-title {
+  height: auto;
 }
 
 .inventory {
@@ -44,16 +67,19 @@ p {
 }
 
 .inventory-card {
-  min-height: 350px;
+  align-items: center;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 450px;
   margin: 10px;
-  min-width: 150px;
+  padding: 5px;
+  min-width: 200px;
 }
 
 .inventory-img {
-  background-image: url('https://theinfosphere.org/images/0/08/Bending_School.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
+  border: 1px solid black;
   height: 150px;
   width: 100%;
 }
@@ -62,7 +88,8 @@ p {
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  height: 300px;
 }
 
 .order-history, .shopping-cart {
@@ -74,6 +101,8 @@ p {
 
 .order-history-page, .shopping-cart-page {
   padding: 15px;
+  height: 100vh;
+  overflow-y: scroll;
   width: 200px;
 }
 

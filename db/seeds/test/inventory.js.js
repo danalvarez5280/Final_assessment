@@ -34,6 +34,7 @@ exports.seed = function(knex, Promise) {
             item_img: 'https://images-na.ssl-images-amazon.com/images/I/41jH1HvljAL._SY344_BO1,204,203,200_.jpg',
             item_price: 9.00
           }], 'id')
+          // .then()
         .then(() => console.log('Seeding complete!'))
         .catch(error => console.log(`Error seeding data: ${error}`))
       ])
