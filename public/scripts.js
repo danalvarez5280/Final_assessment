@@ -55,13 +55,13 @@ const displayOnShoppingCart = (obj) => {
 };
 
 const getInventory = () => {
-  fetch('http://localhost:3001/api/v1/inventory/')
+  fetch('/api/v1/inventory/')
   .then(data => data.json())
   .then(array => displayCards(array))
 };
 
 const getOrderHistory = () => {
-  fetch('http://localhost:3001/api/v1/orders')
+  fetch('/api/v1/orders')
   .then(data => data.json())
   .then(array => displayOrders(array))
   .catch(error => { error })
@@ -91,7 +91,7 @@ const purchaseItem = (e) => {
     item_title: data.title,
     item_price: data.price
   }
-  fetch('http://localhost:3001/api/v1/orders/', {
+  fetch('/api/v1/orders/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
