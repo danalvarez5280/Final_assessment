@@ -34,5 +34,55 @@ describe('Client Routes', () => {
 });
 
 describe('API Routes', () => {
-  
+  before((done) => {
+    database.migrate.latest()
+      .then(() => {
+        done();
+      })
+      .catch((error) => {
+        console.log('Before error: ', error);
+      });
+  });
+
+  beforeEach((done) => {
+    database.seed.run()
+      .then(() => done())
+      .catch((error) => {
+        console.log('Before each error: ', error);
+      });
+  });
+
+  it('should return all of the inventory!', (done) => {
+    chai.request(server)
+      .get('/api/v1/inventory')
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.should.be.a('object');
+        response.body.length.should.equal(4);
+        done();
+      });
+  });
+
+  it('should be able to return a county by the id', (done)=> {
+    chai.request(server)
+      .get('/api/v1/inventory/1')
+      .end((error, response) => {
+        response.should.have.status(200);
+        response.should.be.json;
+        response.should.be.a('object');
+        response.body.length.should.equal(1);
+        response.body[0].should.have.property('id');
+        response.body[0].id.should.equal(1);
+        response.body[0].should.have.property('item_title');
+        response.body[0].item_title.should.equal('Bending Unit');
+        response.body[0].should.have.property('item_desc');
+        response.body[0].item_desc.should.equal('Bending units are robots built by Moms Friendly Robot Company for the main purpose of bending metal for constructive purposes.');
+        response.body[0].should.have.property('item_img');
+        response.body[0].item_img.should.equal('https://theinfosphere.org/images/0/08/Bending_School.png');
+        response.body[0].should.have.property('item_price');
+        response.body[0].item_price.should.equal(5000.00);
+        done();
+      });
+  });
 });
