@@ -27,6 +27,7 @@ h5 {
 }
 
 main {
+  background-color: black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -50,24 +51,33 @@ p {
 }
 
 .cart-item {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   height: 150px;
-  margin-top: 10px;
+  margin-bottom: 10px;
+  overflow-y: scroll;
 }
 
 .cart-item-title {
-  height: auto;
+  height: 50px;
 }
 
 .inventory {
+  background-color: black;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 50px;
   overflow-x: scroll;
   width: 75vw;
 }
 
 .inventory-card {
   align-items: center;
+  background-color: white;
   border: 1px solid black;
   display: flex;
   flex-direction: column;
@@ -92,6 +102,10 @@ p {
   height: 300px;
 }
 
+.item-desc {
+  height: 100px;
+}
+
 .order-history, .shopping-cart {
   display: flex;
   flex-direction: row;
@@ -100,9 +114,12 @@ p {
 }
 
 .order-history-page, .shopping-cart-page {
+  align-items: center;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
   padding: 15px;
-  height: 100vh;
-  overflow-y: scroll;
+  max-height: 100vh;
   width: 200px;
 }
 
@@ -118,6 +135,9 @@ p {
 
 .order-history-title, .shopping-cart-title {
   align-items: center;
+  background-color: black;
+  border: 1px solid yellow;
+  color: yellow;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -126,7 +146,6 @@ p {
 
 .order-history-button, .shopping-cart-button {
   background-color: yellow;
-  border: 1px solid black;
   height: 100px;
   transition-duration: 1.5s;
   width: 100%;
@@ -146,12 +165,34 @@ p {
 
 .order-history-button:hover, .shopping-cart-button:hover {
   background-color: black;
+  border
   cursor: pointer;
 }
 
 .order-item, .cart-item {
+  background-color: white;
   border: 1px solid black;
   padding: 0 5px 5px;
+}
+
+.purchase {
+  align-items: center;
+  background-color: yellow;
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  margin-top: 10px;
+  transition-duration: 1.5s;
+  width: 150px;
+}
+
+.purchase:hover {
+  background-color: black;
+  color: yellow;
+  cursor: pointer;
+  transition-duration: 1.5s;
 }
 
 .shopping-cart-button {
@@ -164,6 +205,11 @@ p {
 .shopping-cart-button:hover {
   background-image: url('./left-arrow-yellow.svg');
   transition-duration: 1.5s;
+}
+
+.shopping-cart-items {
+  max-height: 550px;
+  overflow-y: scroll;
 }
 
 .hide {
