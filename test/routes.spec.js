@@ -52,7 +52,7 @@ describe('API Routes', () => {
       });
   });
 
-  it('should return all of the items in the inventory', (done) => {
+  it('should return all 4 of the items in the inventory', (done) => {
     chai.request(server)
       .get('/api/v1/inventory')
       .end((error, response) => {
@@ -86,9 +86,35 @@ describe('API Routes', () => {
       });
   });
 
+  it('should be able to add an item to the inventory', (done) =>{
+    chai.request(server)
+    .post('/api/v1/inventory')
+    .send({
+      item_title: 'Bender is Great',
+      item_desc: 'Even I have to applaude the performance of me, Bender!',
+      item_img: 'https://avatars2.githubusercontent.com/u/1045011?s=460&v=4',
+      item_price: 1000000.00
+    })
+    .end((error, response) => {
+      response.should.have.status(201);
+      response.body.should.be.a('string');
+
+      done();
+    });
+  });
+
   it('should return a 404 for an item id that does not exist', (done) => {
     chai.request(server)
       .get('/ap1/v1/inventory/4590001')
+      .end((error, response) => {
+        response.should.have.status(404);
+        done();
+      });
+  });
+
+  it('should return a 404 for orders that do not exist', (done) => {
+    chai.request(server)
+      .get('/ap1/v1/orders/4590001')
       .end((error, response) => {
         response.should.have.status(404);
         done();
