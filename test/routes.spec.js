@@ -52,7 +52,7 @@ describe('API Routes', () => {
       });
   });
 
-  it('should return all of the inventory!', (done) => {
+  it('should return all of the items in the inventory', (done) => {
     chai.request(server)
       .get('/api/v1/inventory')
       .end((error, response) => {
@@ -64,7 +64,7 @@ describe('API Routes', () => {
       });
   });
 
-  it('should be able to return a county by the id', (done)=> {
+  it('should be able to return an item from the inventory by the id', (done)=> {
     chai.request(server)
       .get('/api/v1/inventory/1')
       .end((error, response) => {
@@ -82,6 +82,15 @@ describe('API Routes', () => {
         response.body[0].item_img.should.equal('https://theinfosphere.org/images/0/08/Bending_School.png');
         response.body[0].should.have.property('item_price');
         response.body[0].item_price.should.equal(5000.00);
+        done();
+      });
+  });
+
+  it('should return a 404 for an item id that does not exist', (done) => {
+    chai.request(server)
+      .get('/ap1/v1/inventory/4590001')
+      .end((error, response) => {
+        response.should.have.status(404);
         done();
       });
   });
