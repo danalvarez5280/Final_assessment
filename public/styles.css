@@ -1,6 +1,14 @@
+body {
+  font-family: 'Fira Sans Condensed', sans-serif;
+}
+
 header {
   display: flex;
   justify-content: center;
+}
+
+h1 {
+  font-family: 'Fira Sans Condensed', sans-serif;
 }
 
 h3 {
@@ -38,6 +46,7 @@ main {
 
 .order-history-tab, .shopping-cart-tab {
   align-items: center;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -54,6 +63,38 @@ main {
 
 .order-history-button, .shopping-cart-button {
   background-color: yellow;
+  border: 1px solid black;
   height: 100px;
+  transition-duration: 1.5s;
   width: 100%;
+}
+
+
+.order-history-button {
+  background-image: url('./right-arrow.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.order-history-button:hover {
+  background-image: url('./right-arrow-yellow.svg');
+  transition-duration: 1.5s;
+}
+
+.order-history-button:hover, .shopping-cart-button:hover {
+  background-color: black;
+  cursor: pointer;
+}
+
+.shopping-cart-button {
+  background-image: url('./left-arrow.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.shopping-cart-button:hover {
+  background-image: url('./left-arrow-yellow.svg');
+  transition-duration: 1.5s;
 }
