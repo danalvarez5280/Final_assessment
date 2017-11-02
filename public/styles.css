@@ -3,8 +3,8 @@ header {
   justify-content: center;
 }
 
-h4 {
-  
+h3 {
+  text-align: center;
 }
 
 main {
@@ -22,6 +22,7 @@ main {
 
 .inventory-card {
   height: 150px;
+  /*overflow-x: scroll;*/
   width: 150px;
 }
 
@@ -34,7 +35,24 @@ main {
   width: 100%;
 }
 
-.order-history-tab {
+.order-history-tab, .shopping-cart-tab {
+  align-items: center;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  width: 100px;
+}
+
+.order-history-title, .shopping-cart-title {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.order-history-button, .shopping-cart-button {
+  background-color: yellow;
+  height: 100px;
+  width: 100%;
 }
