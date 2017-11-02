@@ -221,3 +221,23 @@ p {
 .hide {
   display: none;
 }
+
+.left-arrow {
+  background-image: url('right-arrow.svg');
+}
+
+.right-arrow {
+  background-image: url('right-arrow.svg');
+}
+
+.right-arrow:hover {
+  background-image: url('right-arrow-yellow.svg');
+  background-color: black;
+  transition-duration: 1.5s;
+}
+
+.left-arrow:hover {
+  background-image: url('left-arrow-yellow.svg');
+  background-color: black;
+  transition-duration: 1.5s;
+}

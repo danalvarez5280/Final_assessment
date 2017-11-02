@@ -1,7 +1,6 @@
 const addToCart = (e) => {
   let data = e.target.dataset;
   displayOnShoppingCart(data);
-  console.log('data to cart', data.title);
   let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
 
   cart.push(data);
@@ -37,13 +36,14 @@ const displayOrders = (array) => {
           <p>$ ${order.item_price}</p>
           <h5>Date Ordered:</h5>
           <p>${order.created_at}</p>
-        </div>`)
+        </div>`
+      )
     })
   }
 };
 
 const displayOnShoppingCart = (obj) => {
-  $('.inventory').append(
+  $('.shopping-cart-page').append(
     `<div class='cart-item'>
       <h5>Item Title:</h5>
       <p class='cart-item-title'>${obj.title}</p>
@@ -85,6 +85,7 @@ const getShoppingCart = () => {
 };
 
 const purchaseItem = (e) => {
+  let card = e.target.closest('.cart-item');
   let data = e.target.dataset;
   let order = {
     item_title: data.title,
@@ -98,17 +99,39 @@ const purchaseItem = (e) => {
     body: JSON.stringify(order)
   })
   .then(data => data.json())
+  .then(thing => console.log(thing))
   .then(thing => alert('You just made a purchase. Your credit card will now be charged. Thank you!'))
   .catch(error => { error })
+  $(card).remove()
+  clickedPurchase(data)
+};
+
+const clickedPurchase = (obj) => {
+  let timeStamp = Date.now()
+  console.log('hi dan', $('.order-item'));
+  $('.order-history-page').append(
+    `<div class="order-item">
+      <h5>Item Title:</h5>
+      <p>${obj.title}</p>
+      <h5>Item Price:</h5>
+      <p>$ ${obj.price}</p>
+      <h5>Date Ordered:</h5>
+      <p>${timeStamp}</p>
+    </div>`
+  )
 };
 
 const showCart = (e) => {
+  let button = e.target;
+  $(button).toggleClass('right-arrow');
   let hideArea = e.target.closest('.shopping-cart');
   let childArea = $(hideArea).find('.shopping-cart-page');
   $(childArea).toggleClass('hide');
 };
 
 const showHistory = (e) => {
+  let button = e.target;
+  $(button).toggleClass('left-arrow');
   let hideArea = e.target.closest('.order-history');
   let childArea = $(hideArea).find('.order-history-page');
   $(childArea).toggleClass('hide');
