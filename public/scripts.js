@@ -158,7 +158,7 @@ const tallyCartTotal = () => {
     totalCost += parseInt(item.price)
   })
 
-  $('.purchase-total').text(totalCost)
+  $('.purchase-total').text('$' + totalCost)
 };
 
 
