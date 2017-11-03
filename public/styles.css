@@ -201,6 +201,10 @@ p {
   transition-duration: 1.5s;
 }
 
+.purchase-total {
+  color: yellow;
+}
+
 .shopping-cart-button {
   background-image: url('./left-arrow.svg');
   background-position: center;
@@ -218,12 +222,16 @@ p {
   overflow-y: scroll;
 }
 
+.total {
+  color: yellow;
+}
+
 .hide {
   display: none;
 }
 
 .left-arrow {
-  background-image: url('right-arrow.svg');
+  background-image: url('left-arrow.svg');
 }
 
 .right-arrow {

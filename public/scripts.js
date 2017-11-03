@@ -5,6 +5,7 @@ const addToCart = (e) => {
 
   cart.push(data);
   localStorage.setItem('shoppingCart', JSON.stringify(cart));
+  tallyCartTotal();
 };
 
 const displayCards = (array) => {
@@ -43,7 +44,7 @@ const displayOrders = (array) => {
 };
 
 const displayOnShoppingCart = (obj) => {
-  $('.shopping-cart-page').append(
+  $('.shopping-cart-items').append(
     `<div class='cart-item'>
       <h5>Item Title:</h5>
       <p class='cart-item-title'>${obj.title}</p>
@@ -76,8 +77,8 @@ const getShoppingCart = () => {
           <h5>Item Title:</h5>
           <p class='cart-item-title'>${item.title}</p>
           <h5>Item Price:</h5>
-          <p class='cart-item-title'>$ ${item.price}</p>
-          <div class='purchase' data-title='${item.title}' data-price=${item.price}>Purchase</div>
+          <p class='cart-item-title'>$ <span class='cart-price'>${item.price}</span></p>
+          <div class='purchase' data-id=${item.id} data-title='${item.title}' data-price=${item.price}>Purchase</div>
         </div>`
       )
     })
@@ -87,6 +88,17 @@ const getShoppingCart = () => {
 const purchaseItem = (e) => {
   let card = e.target.closest('.cart-item');
   let data = e.target.dataset;
+  console.log('data', data)
+  let localArray = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+  let removedItem = localArray.find(item => {
+    item.id = data.id
+  })
+
+  let removeIndex = localArray.indexOf(removedItem);
+  localArray.splice(removeIndex, 1)
+
+  localStorage.setItem('shoppingCart', JSON.stringify(localArray));
+
   let order = {
     item_title: data.title,
     item_price: data.price
@@ -104,6 +116,7 @@ const purchaseItem = (e) => {
   .catch(error => { error })
   $(card).remove()
   clickedPurchase(data)
+  tallyCartTotal()
 };
 
 const clickedPurchase = (obj) => {
@@ -122,6 +135,7 @@ const clickedPurchase = (obj) => {
 };
 
 const showCart = (e) => {
+  tallyCartTotal()
   let button = e.target;
   $(button).toggleClass('right-arrow');
   let hideArea = e.target.closest('.shopping-cart');
@@ -135,6 +149,16 @@ const showHistory = (e) => {
   let hideArea = e.target.closest('.order-history');
   let childArea = $(hideArea).find('.order-history-page');
   $(childArea).toggleClass('hide');
+};
+
+const tallyCartTotal = () => {
+  let totalCost = 0;
+  let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+  cart.forEach(item => {
+    totalCost += parseInt(item.price)
+  })
+
+  $('.purchase-total').text(totalCost)
 };
 
 
