@@ -92,6 +92,7 @@ app.post('/api/v1/orders', (request, response) => {
   });
 });
 
+//the admin should be able to delete an inventory item
 app.delete('/api/v1/inventory/:id', (request, response) => {
   const { id } = request.params;
 

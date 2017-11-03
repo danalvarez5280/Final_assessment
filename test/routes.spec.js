@@ -64,7 +64,7 @@ describe('API Routes', () => {
       });
   });
 
-  it('should be able to return an item from the inventory by the id', (done)=> {
+  it('should be able to return an item from the inventory by the id', (done) => {
     chai.request(server)
       .get('/api/v1/inventory/1')
       .end((error, response) => {
@@ -86,21 +86,64 @@ describe('API Routes', () => {
       });
   });
 
-  it('should be able to add an item to the inventory', (done) =>{
+  it('should be able to add an item to the inventory', (done) => {
     chai.request(server)
-    .post('/api/v1/inventory')
+    .post('/api/v1/inventory/')
     .send({
       item_title: 'Bender is Great',
       item_desc: 'Even I have to applaude the performance of me, Bender!',
       item_img: 'https://avatars2.githubusercontent.com/u/1045011?s=460&v=4',
-      item_price: 1000000.00
+      item_price: 1000000
     })
     .end((error, response) => {
       response.should.have.status(201);
-      response.body.should.be.a('string');
+      response.body.should.be.a('object');
 
       done();
     });
+  });
+
+  it('should be able to add a purchase to the order history', (done) => {
+    chai.request(server)
+    .post('/api/v1/orders')
+    .send({
+      item_title: 'Bender is Great',
+      item_price: 1000000
+    })
+    .end((error, response) => {
+      response.should.have.status(201);
+      response.body.should.be.a('object');
+
+      done();
+    });
+  });
+
+  it('should throw an error if you post something incorrectly to the inventory table', (done) => {
+    chai.request(server)
+      .post('/api/v1/inventory')
+      .send({
+        item_title: 'Dan is Great',
+        item_desc: 'He is such a great guy!'
+      })
+      .end((error, response) => {
+        response.should.have.status(422)
+
+        done();
+      });
+  });
+
+  it('should throw an error if you post something incorrectly to the order history table', (done) => {
+    chai.request(server)
+      .post('/api/v1/orders')
+      .send({
+        item_title: 'Dan is Great',
+        item_desc: 'He is such a great guy!'
+      })
+      .end((error, response) => {
+        response.should.have.status(422)
+
+        done();
+      });
   });
 
   it('should return a 404 for an item id that does not exist', (done) => {
