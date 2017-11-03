@@ -31,9 +31,9 @@ const displayOrders = (array) => {
     return array.forEach(order => {
       $('.order-history-page').append(
         `<div class="order-item">
-          <h5>Item Title:</h5>
+          <h5>Item Purchased:</h5>
           <p>${order.item_title}</p>
-          <h5>Item Price:</h5>
+          <h5>Item Cost:</h5>
           <p>$ ${order.item_price}</p>
           <h5>Date Ordered:</h5>
           <p>${order.created_at}</p>
@@ -88,7 +88,6 @@ const getShoppingCart = () => {
 const purchaseItem = (e) => {
   let card = e.target.closest('.cart-item');
   let data = e.target.dataset;
-  console.log('data', data)
   let localArray = JSON.parse(localStorage.getItem('shoppingCart')) || [];
   let removedItem = localArray.find(item => {
     item.id = data.id
@@ -121,12 +120,11 @@ const purchaseItem = (e) => {
 
 const clickedPurchase = (obj) => {
   let timeStamp = Date.now()
-  console.log('hi dan', $('.order-item'));
   $('.order-history-page').append(
     `<div class="order-item">
-      <h5>Item Title:</h5>
+      <h5>Item Purchased:</h5>
       <p>${obj.title}</p>
-      <h5>Item Price:</h5>
+      <h5>Item Cost:</h5>
       <p>$ ${obj.price}</p>
       <h5>Date Ordered:</h5>
       <p>${timeStamp}</p>

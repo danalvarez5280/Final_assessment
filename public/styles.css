@@ -48,6 +48,8 @@ p {
 
 .add-to-cart:hover {
   cursor: pointer;
+  background-color: black;
+  color: yellow;
 }
 
 .cart-item {
@@ -179,6 +181,7 @@ p {
   margin-bottom: 10px;
   overflow-y: scroll;
   padding: 0 5px 5px;
+  min-width: 200px;
 }
 
 .purchase {
