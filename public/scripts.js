@@ -31,10 +31,8 @@ const displayOrders = (array) => {
     return array.forEach(order => {
       $('.order-history-page').append(
         `<div class="order-item">
-          <h5>Item Purchased:</h5>
-          <p>${order.item_title}</p>
           <h5>Item Cost:</h5>
-          <p>$ ${order.item_price}</p>
+          <p>${order.item_price}</p>
           <h5>Date Ordered:</h5>
           <p>${order.created_at}</p>
         </div>`
@@ -49,8 +47,7 @@ const displayOnShoppingCart = (obj) => {
       <h5>Item Title:</h5>
       <p class='cart-item-title'>${obj.title}</p>
       <h5>Item Price:</h5>
-      <p class='cart-item-title'>$ ${obj.price}</p>
-      <div class='purchase' data-title='${obj.title}' data-price=${obj.price}>Purchase</div>
+      <p class='cart-item-title'>${obj.price}</p>
     </div>`
   )
 };
@@ -77,32 +74,15 @@ const getShoppingCart = () => {
           <h5>Item Title:</h5>
           <p class='cart-item-title'>${item.title}</p>
           <h5>Item Price:</h5>
-          <p class='cart-item-title'>$ <span class='cart-price'>${item.price}</span></p>
-          <div class='purchase' data-id=${item.id} data-title='${item.title}' data-price=${item.price}>Purchase</div>
+          <p class='cart-item-title'><span class='cart-price'>${item.price}</span></p>
         </div>`
       )
     })
   }
 };
 
-const purchaseItem = (e) => {
-  let card = e.target.closest('.cart-item');
-  let data = e.target.dataset;
-  let localArray = JSON.parse(localStorage.getItem('shoppingCart')) || [];
-  let removedItem = localArray.find(item => {
-    item.id = data.id
-  })
-
-  let removeIndex = localArray.indexOf(removedItem);
-  localArray.splice(removeIndex, 1)
-
-  localStorage.setItem('shoppingCart', JSON.stringify(localArray));
-
-  let order = {
-    item_title: data.title,
-    item_price: data.price
-  }
-  fetch('/api/v1/orders/', {
+const postOrder = (order) => {
+  fetch('/api/v1/orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -113,19 +93,30 @@ const purchaseItem = (e) => {
   .then(thing => console.log(thing))
   .then(thing => alert('You just made a purchase. Your credit card will now be charged. Thank you!'))
   .catch(error => { error })
-  $(card).remove()
-  clickedPurchase(data)
-  tallyCartTotal()
 };
+
+const purchaseItems = () => {
+  let cost = parseInt($('.purchase-total')[0].innerHTML);
+  let cards = $('.cart-item');
+  let order = {
+    item_title: 'Order',
+    item_price: cost
+  }
+
+  $(cards).remove();
+  postOrder(order);
+  clickedPurchase(order);
+  tallyCartTotal();
+  $('.purchase-total').text(0)
+};
+
 
 const clickedPurchase = (obj) => {
   let timeStamp = Date.now()
   $('.order-history-page').append(
     `<div class="order-item">
-      <h5>Item Purchased:</h5>
-      <p>${obj.title}</p>
       <h5>Item Cost:</h5>
-      <p>$ ${obj.price}</p>
+      <p>$ ${obj.item_price}</p>
       <h5>Date Ordered:</h5>
       <p>${timeStamp}</p>
     </div>`
@@ -156,14 +147,14 @@ const tallyCartTotal = () => {
     totalCost += parseInt(item.price)
   })
 
-  $('.purchase-total').text('$' + totalCost)
+  $('.purchase-total').text(totalCost)
 };
 
 
 $(document).ready(getInventory);
 $(document).ready(getShoppingCart);
 $(document).ready(getOrderHistory);
-$('.shopping-cart-page').on('click', '.purchase', purchaseItem)
+$('.shopping-cart-page').on('click', '.purchase-all', purchaseItems)
 $('.inventory').on('click', '.add-to-cart', addToCart);
 $('.shopping-cart').on('click', '.shopping-cart-button', showCart);
 $('.order-history').on('click', '.order-history-button', showHistory);

@@ -204,8 +204,28 @@ p {
   transition-duration: 1.5s;
 }
 
+.purchase-all {
+  background-color: yellow;
+  border: 1px solid yellow;
+  border-radius: 5px;
+  color: black;
+  height: 25px;
+  padding: 5px;
+  text-align: center;
+  transition: 1.5s;
+  width: 150px;
+}
+
+.purchase-all:hover {
+  background-color: black;
+  color: yellow;
+  cursor: pointer;
+  transition-duration: 1.5s;
+}
+
 .purchase-total {
   color: yellow;
+  height: 20px;
 }
 
 .shopping-cart-button {
@@ -226,7 +246,11 @@ p {
 }
 
 .total {
+  align-items: center;
   color: yellow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hide {
