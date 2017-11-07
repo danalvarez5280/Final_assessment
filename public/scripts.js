@@ -107,7 +107,8 @@ const purchaseItems = () => {
   postOrder(order);
   clickedPurchase(order);
   tallyCartTotal();
-  $('.purchase-total').text(0)
+  $('.purchase-total').text(0);
+  localStorage.clear();
 };
 
 
@@ -134,9 +135,9 @@ const showCart = (e) => {
 
 const showHistory = (e) => {
   let button = e.target;
-  $(button).toggleClass('left-arrow');
   let hideArea = e.target.closest('.order-history');
   let childArea = $(hideArea).find('.order-history-page');
+  $(button).toggleClass('left-arrow');
   $(childArea).toggleClass('hide');
 };
 

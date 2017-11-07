@@ -44,12 +44,14 @@ p {
   border: 2px solid black;
   border-radius: 5px;
   padding: 5px;
+  transition-duration: 1.5s;
 }
 
 .add-to-cart:hover {
-  cursor: pointer;
   background-color: black;
+  cursor: pointer;
   color: yellow;
+  transition-duration: 1.5s;
 }
 
 .cart-item {
@@ -166,7 +168,6 @@ p {
 
 .order-history-button:hover, .shopping-cart-button:hover {
   background-color: black;
-  border
   cursor: pointer;
 }
 
